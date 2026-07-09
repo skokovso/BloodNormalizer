@@ -1,0 +1,32 @@
+name: Mirror to GitHub
+
+on:
+  push:
+    branches:
+      - '*'  # Зеркалировать все ветки
+    tags:
+      - '*'  # Зеркалировать все теги
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "Your Name"
+        git config --global user.email "your-email@example.com"
+
+    - name: Mirror to Remote
+      env:
+        TARGET_REPO: "https://${{ secrets.GH_MIRROR_ACTOR }}:${{ secrets.GH_MIRROR_TOKEN }}@github.com/${{ secrets.GH_MIRROR_ACTOR }}/${{ secrets.GH_MIRROR_REPO }}"
+      run: |
+        git remote add target $TARGET_REPO
+        git push --mirror --force target

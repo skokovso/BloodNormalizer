@@ -1,0 +1,23 @@
+name: Mirror to Mos.Hub
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "*" ]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Mos.Hub
+        env:
+          TARGET_REPO: "https://${{ secrets.MOS_HUB_USER }}:${{ secrets.MOS_HUB_TOKEN }}@hub.mos.ru/${{ secrets.MOS_HUB_USER }}/${{ secrets.MOS_HUB_REPO }}.git"
+        run: |
+          git remote add target $TARGET_REPO
+          git push --force target --all
+          git push --force target --tags

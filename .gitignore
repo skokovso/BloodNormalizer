@@ -1,0 +1,31 @@
+# Большие модели (исключаем только gigaam и t5, но НЕ vosk)
+models/gigaam/
+models/t5/
+models/Models.zip
+
+
+# Персональные денные
+personal/
+personal/data/
+reports/
+data/
+data_archive/
+archive/
+enter_data/
+
+# Папка для больших файлов проекта (не моделей)
+big_files/
+
+# Временные файлы, кэши, сборки
+cache/
+hub/
+dist/
+build/
+__pycache__/
+*.pyc
+*.pyo
+*.spec
+
+# Локальные настройки (если появятся)
+config.local.json
+.env
